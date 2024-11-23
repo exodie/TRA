@@ -27,11 +27,10 @@
 .card {
   width: 100%;
 
-  background-color: #333;
-  color: #fff;
+  background-color: rgb(240, 240, 240);
+  color: black;
 
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
 
   padding: 16px;
 }
@@ -45,7 +44,7 @@
 }
 
 .image-placeholder {
-  background-color: #555;
+  background-color: rgb(215, 215, 215);
   width: 100%;
   border-radius: 8px;
   margin-bottom: 16px;
