@@ -1,5 +1,8 @@
 import HomeView from '@/views/home/HomeView.vue'
-import AboutView from '@/views/about/AboutView.vue'
+import AuthView from '@/views/auth/AuthView.vue'
+import SignInView from '@/views/auth/SignInView.vue'
+import SignUpView from '@/views/auth/SignUpView.vue'
+
 import { ROUTE_PATHS } from '../constants'
 
 export const routes = [
@@ -8,7 +11,17 @@ export const routes = [
     component: HomeView,
   },
   {
-    path: ROUTE_PATHS.ABOUT,
-    component: AboutView,
+    path: ROUTE_PATHS.AUTH.ROOT,
+    component: AuthView,
+    children: [
+      {
+        path: ROUTE_PATHS.AUTH.SIGN_IN,
+        component: SignInView,
+      },
+      {
+        path: ROUTE_PATHS.AUTH.SIGN_UP,
+        component: SignUpView,
+      },
+    ],
   },
 ]

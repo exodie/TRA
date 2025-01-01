@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { Button, Card, Image } from 'primevue'
 
 import { makeCards } from '@/shared'
 import type { Item } from '@/types'
@@ -14,7 +13,11 @@ const cards = reactive<Item[]>(makeCards(12))
   <CardHeader :items="cards" />
 
   <div class="container">
-    <Card style="width: 25rem; overflow: hidden" v-for="({ title, description }, index) in cards" :key="index">
+    <Card
+      style="width: 25rem; overflow: hidden"
+      v-for="({ title, description }, index) in cards"
+      :key="index"
+    >
       <template #header>
         <Image src="/img/wallpapper.jpg" alt="wallpapper" width="400" />
       </template>

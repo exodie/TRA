@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Item } from '@/types'
-import { Button } from 'primevue'
 
 defineProps<{
   items: Item[]

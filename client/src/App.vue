@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
   <div id="app">
     <nav>
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/auth/signin">Auth</RouterLink>
     </nav>
     <main>
       <RouterView />
@@ -27,7 +27,7 @@ main {
   padding-inline: 18px;
 }
 
-nav>a+a {
+nav > a + a {
   margin-left: 10px;
 }
 </style>
