@@ -1,14 +1,14 @@
 {
   "name": "client",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --build --force",
+    "dev": "npm i && vite",
+    "build": "npm i && run-p type-check \"build-only {@}\" --",
+    "preview": "npm i && vite preview",
+    "build-only": "npm i && vite build",
+    "typecheck": "npm i && vue-tsc --build --force",
     "lint": "eslint . --fix",
     "format": "prettier --write ."
   },
@@ -16,7 +16,7 @@
     "@primevue/themes": "^4.2.5",
     "primevue": "^4.2.5",
     "vue": "^3.5.12",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
