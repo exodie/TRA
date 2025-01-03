@@ -14,7 +14,7 @@ const cards = reactive<Item[]>(makeCards(12))
 
   <div class="container">
     <Card
-      style="width: 25rem; overflow: hidden"
+      style="max-width: 400px"
       v-for="({ title, description }, index) in cards"
       :key="index"
     >

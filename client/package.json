@@ -3,6 +3,17 @@
   "version": "0.4.0",
   "private": true,
   "type": "module",
+  "author": {
+    "name": "iamitrofanov"
+  },
+  "maintainers": [
+    {
+      "name": "iamitrofanov"
+    },
+    {
+      "name": "agkirgizov"
+    }
+  ],
   "scripts": {
     "dev": "npm i && vite",
     "build": "npm i && run-p type-check \"build-only {@}\" --",

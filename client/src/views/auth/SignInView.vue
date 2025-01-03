@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { z } from 'zod'
 import { useToast } from 'primevue/usetoast'
@@ -13,6 +14,15 @@ const toast = useToast()
 const redirectToSignUp = () => {
   router.push(REDIRECT_SIGNUP)
 }
+
+const getInitData = () => {
+  return {
+    username: '',
+    password: '',
+  }
+}
+
+const formData = ref(getInitData())
 
 const resolver = zodResolver(
   z.object({
@@ -29,6 +39,19 @@ const onFormSubmit = ({ valid }: { valid: boolean }) => {
       summary: 'Form is submitted.',
       life: 3000,
     })
+
+    const {
+      value: { username, password },
+    } = formData
+
+    toast.add({
+      severity: 'info',
+      summary: `username=${username}, password=${password}`,
+      life: 3000,
+    })
+
+    // clear ref values
+    formData.value = getInitData()
   }
 }
 </script>
@@ -39,14 +62,13 @@ const onFormSubmit = ({ valid }: { valid: boolean }) => {
   <Form :resolver @submit="onFormSubmit" class="auth_form_container">
     <h1>Sign In</h1>
 
-    <FormField
-      v-slot="$field"
-      as="section"
-      name="username"
-      initialValue=""
-      class="flex flex-col gap-2"
-    >
-      <InputText type="text" placeholder="Username" class="wfull" />
+    <FormField v-slot="$field" as="section" name="username" initialValue="">
+      <InputText
+        type="text"
+        placeholder="Username"
+        class="wfull"
+        v-model="formData.username"
+      />
       <Message
         v-if="$field?.invalid"
         severity="error"
@@ -55,14 +77,16 @@ const onFormSubmit = ({ valid }: { valid: boolean }) => {
         >{{ $field.error?.message }}
       </Message>
     </FormField>
+
     <FormField v-slot="$field" asChild name="password" initialValue="">
-      <section class="flex flex-col gap-2">
+      <section>
         <Password
-          type="text"
-          placeholder="Password"
-          :feedback="false"
           toggleMask
           fluid
+          type="text"
+          placeholder="Password"
+          v-model="formData.password"
+          :feedback="false"
         />
         <Message
           v-if="$field?.invalid"

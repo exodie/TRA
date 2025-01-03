@@ -15,6 +15,7 @@ declare module 'vue' {
     FormField: typeof import('@primevue/forms/formfield')['default']
     Image: typeof import('primevue/image')['default']
     InputText: typeof import('primevue/inputtext')['default']
+    Logo: typeof import('./src/components/logo/Logo.vue')['default']
     Message: typeof import('primevue/message')['default']
     Password: typeof import('primevue/password')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

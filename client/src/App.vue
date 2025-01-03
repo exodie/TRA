@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import Logo from './components/logo/Logo.vue'
 </script>
 
 <template>
   <div id="app">
     <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/auth/signin">Auth</RouterLink>
+      <RouterLink to="/">
+        <Logo />
+      </RouterLink>
+      <RouterLink to="/auth/signin">Sign In</RouterLink>
     </nav>
     <main>
       <RouterView />
@@ -21,13 +24,26 @@ import { RouterLink, RouterView } from 'vue-router'
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: 20px;
+}
+
 nav,
 main {
-  padding-block: 10px;
+  padding-block: 8px;
   padding-inline: 18px;
 }
 
 nav > a + a {
   margin-left: 10px;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

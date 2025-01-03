@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { z } from 'zod'
 import { useToast } from 'primevue/usetoast'
@@ -14,12 +15,32 @@ const redirectToSignIn = () => {
   router.push(REDIRECT_SIGNIN)
 }
 
+const getInitData = () => {
+  return {
+    username: '',
+    password: '',
+    repeatPassword: '',
+  }
+}
+
+const formData = ref(getInitData())
+
 const resolver = zodResolver(
-  z.object({
-    username: z.string().min(3, { message: 'Username is required.' }),
-    password: z.string().min(8, { message: 'Password short or null.' }),
-    repeatPassword: z.string().min(8, { message: 'Password short or null.' }),
-  }),
+  z
+    .object({
+      username: z.string().min(3, { message: 'Username is required.' }),
+      password: z.string().min(8, { message: 'Password short or null.' }),
+      repeatPassword: z.string().min(8, { message: 'Password short or null.' }),
+    })
+    .superRefine(({ repeatPassword, password }, ctx) => {
+      if (repeatPassword !== password) {
+        ctx.addIssue({
+          code: 'custom',
+          message: 'The passwords did not match',
+          path: ['repeatPassword'],
+        })
+      }
+    }),
 )
 
 // TODO: /v1/user/signup handle
@@ -30,9 +51,20 @@ const onFormSubmit = ({ valid }: { valid: boolean }) => {
       summary: 'Form is submitted.',
       life: 3000,
     })
-  }
 
-  console.log()
+    const {
+      value: { username, password, repeatPassword },
+    } = formData
+
+    toast.add({
+      severity: 'info',
+      summary: `username=${username}, password=${password}, rpassword=${repeatPassword}`,
+      life: 3000,
+    })
+
+    // clear ref values
+    formData.value = getInitData()
+  }
 }
 </script>
 
@@ -43,7 +75,12 @@ const onFormSubmit = ({ valid }: { valid: boolean }) => {
     <h1>Sign Up</h1>
 
     <FormField v-slot="$field" as="section" name="username" initialValue="">
-      <InputText type="text" placeholder="Username" class="wfull" />
+      <InputText
+        type="text"
+        placeholder="Username"
+        class="wfull"
+        v-model="formData.username"
+      />
       <Message
         v-if="$field?.invalid"
         severity="error"
@@ -55,11 +92,12 @@ const onFormSubmit = ({ valid }: { valid: boolean }) => {
     <FormField v-slot="$field" asChild name="password" initialValue="">
       <section>
         <Password
+          toggleMask
+          fluid
           type="text"
           placeholder="Password"
           :feedback="false"
-          toggleMask
-          fluid
+          v-model="formData.password"
         />
         <Message
           v-if="$field?.invalid"
@@ -73,11 +111,12 @@ const onFormSubmit = ({ valid }: { valid: boolean }) => {
     <FormField v-slot="$field" asChild name="repeatPassword" initialValue="">
       <section>
         <Password
+          toggleMask
+          fluid
           type="text"
           placeholder="Repeat password"
           :feedback="false"
-          toggleMask
-          fluid
+          v-model="formData.repeatPassword"
         />
         <Message
           v-if="$field?.invalid"
